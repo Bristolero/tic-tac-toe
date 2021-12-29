@@ -1,0 +1,84 @@
+@font-face {
+    font-family: JuneBug;
+    src: url('JUNEBUG.TTF');
+}
+
+@font-face {
+    font-family: Comfortaa;
+    src: url('Comfortaa-VariableFont_wght.ttf');
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(240, 203, 184);
+    height: 90vh;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.board {
+    background-color: whitesmoke;
+    height: 800px;
+    width: 800px;
+    border-radius: 20px;
+    border: 3px solid black;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    grid-gap: 20px 20px;
+    padding: 20px;
+}
+
+.turn-indicator {
+    padding: 20px;
+    align-self: flex-start;
+    font-size: 30px;
+}
+
+.field {
+    background-color: rgb(234, 236, 109);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(255, 215, 39);
+    font-family: Comfortaa;
+    font-size: 100px;
+    font-weight: 600;
+}
+
+.field:hover {
+    background-color: rgb(255, 215, 39);
+}
+
+.field:active {
+    background-color:rgb(171, 173, 3)
+}
+
+.field.made-red {
+    background-color: rgb(255, 111, 92);
+}
+
+.field.made-green {
+    background-color: rgb(100, 221, 96);
+}
+
+header {
+    font-family: JuneBug;
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+main {
+    flex-grow: 1;
+}
