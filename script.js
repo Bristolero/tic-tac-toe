@@ -7,8 +7,27 @@ const PlayerFactory = (name) => {
 const player1 = PlayerFactory("Player 1");
 const player2 = PlayerFactory("Player 2");
 
+//GUI Elements
+const gameGrid = document.getElementById("gameGrid")
+
 const GameBoard = (() => {
     const board = ["","","","","","","","",""];
+
+    const loadBoard = () => {
+        let gameGrid = document.getElementById('gameGrid')
+        gameGrid.innerHTML = "";
+        for(let i = 1; i<=GameBoard.board.length; i++) {
+            console.log(GameBoard.board[i-1])
+            let fieldDiv = document.createElement('div');
+            fieldDiv.id = i;
+            fieldDiv.classList.add('field');
+            fieldDiv.innerHTML = GameBoard.board[i-1];
+            fieldDiv.addEventListener('click', function () {
+                GameController.makeMove(fieldDiv.id)
+            });
+            gameGrid.appendChild(fieldDiv);
+        }
+    }
 
     const removeListeners = () => {
         var el = document.getElementById("gameGrid");
@@ -19,38 +38,49 @@ const GameBoard = (() => {
             field.style.pointerEvents = "none";
         }
     }
+   
 
     const checkWin = () => {
-        if( (board[0] == "O" && board[3] == "O" && board[6] == "O") || 
-        (board[1] == "O" && board[4] == "O" && board[7] == "O") || 
-        (board[2] == "O" && board[5] == "O" && board[8] == "O") || 
-        (board[0] == "O" && board[1] == "O" && board[2] == "O") || 
-        (board[3] == "O" && board[4] == "O" && board[5] == "O") ||
-        (board[6] == "O" && board[7] == "O" && board[8] == "O") || 
-        (board[0] == "O" && board[4] == "O" && board[8] == "O") || 
-        (board[2] == "O" && board[4] == "O" && board[6] == "O") ) {   
+        if( (board[0] == "O" && GameBoard.board[3] == "O" && GameBoard.board[6] == "O") || 
+        (GameBoard.board[1] == "O" && GameBoard.board[4] == "O" && GameBoard.board[7] == "O") || 
+        (GameBoard.board[2] == "O" && GameBoard.board[5] == "O" && GameBoard.board[8] == "O") || 
+        (GameBoard.board[0] == "O" && GameBoard.board[1] == "O" && GameBoard.board[2] == "O") || 
+        (GameBoard.board[3] == "O" && GameBoard.board[4] == "O" && GameBoard.board[5] == "O") ||
+        (GameBoard.board[6] == "O" && GameBoard.board[7] == "O" && GameBoard.board[8] == "O") || 
+        (GameBoard.board[0] == "O" && GameBoard.board[4] == "O" && GameBoard.board[8] == "O") || 
+        (GameBoard.board[2] == "O" && GameBoard.board[4] == "O" && GameBoard.board[6] == "O") ) {   
             DisplayController.showWinner("Player 2");
             removeListeners();
-        } else if ( (board[0] == "X" && board[3] == "X" && board[6] == "X") || 
-        (board[1] == "X" && board[4] == "X" && board[7] == "X") || 
-        (board[2] == "X" && board[5] == "X" && board[8] == "X") || 
-        (board[0] == "X" && board[1] == "X" && board[2] == "X") || 
-        (board[3] == "X" && board[4] == "X" && board[5] == "X") ||
-        (board[6] == "X" && board[7] == "X" && board[8] == "X") || 
-        (board[0] == "X" && board[4] == "X" && board[8] == "X") || 
-        (board[2] == "X" && board[4] == "X" && board[6] == "X") ) {
+        } else if ( (GameBoard.board[0] == "X" && GameBoard.board[3] == "X" && GameBoard.board[6] == "X") || 
+        (GameBoard.board[1] == "X" && GameBoard.board[4] == "X" && GameBoard.board[7] == "X") || 
+        (GameBoard.board[2] == "X" && GameBoard.board[5] == "X" && GameBoard.board[8] == "X") || 
+        (GameBoard.board[0] == "X" && GameBoard.board[1] == "X" && GameBoard.board[2] == "X") || 
+        (GameBoard.board[3] == "X" && GameBoard.board[4] == "X" && GameBoard.board[5] == "X") ||
+        (GameBoard.board[6] == "X" && GameBoard.board[7] == "X" && GameBoard.board[8] == "X") || 
+        (GameBoard.board[0] == "X" && GameBoard.board[4] == "X" && GameBoard.board[8] == "X") || 
+        (GameBoard.board[2] == "X" && GameBoard.board[4] == "X" && GameBoard.board[6] == "X") ) {
             DisplayController.showWinner("Player 1");
             removeListeners();
-        } else if (!board.includes("")) {
+        } else if (!GameBoard.board.includes("")) {
             DisplayController.showWinner("Nobody")
+            removeListeners();
         }
     }
-    return {board, checkWin}
+    return {board, checkWin, loadBoard}
 })();
 
 
 const GameController = (() => {
     let whosTurn = player1;
+
+    const reset = () => {
+        GameBoard.board = ["","","","","","","","",""]
+        gameGrid.innerHTML="";
+        GameBoard.loadBoard()
+        whosTurn = player1;
+        console.log("RESET")
+        DisplayController.handleTurn(whosTurn.name)
+    }
 
     const manipulateField = (id) => {
         let field = document.getElementById(id);
@@ -65,7 +95,7 @@ const GameController = (() => {
         }
     }
 
-    const makeMove = (id,board) => {
+    const makeMove = (id) => {
         if(whosTurn.name == "Player 1" && GameBoard.board[id-1]=="") {
             GameBoard.board[id-1] = "X";
             whosTurn = player2;
@@ -79,10 +109,7 @@ const GameController = (() => {
         GameBoard.checkWin();
     };
 
-    const reset = () => {
-        console.log("RESET")
-    }
-    return {makeMove,whosTurn, reset};
+    return {makeMove, whosTurn, reset};
 })();
 
 const DisplayController = (() => {
@@ -98,23 +125,7 @@ const DisplayController = (() => {
 })();
 
 //ON INIT
-
-//GUI Elements
-const gameGrid = document.getElementById('gameGrid');
-
-
 //Load Board
-for(let i = 1; i<=GameBoard.board.length; i++) {
-    console.log(GameBoard.board[i-1])
-    let fieldDiv = document.createElement('div');
-    fieldDiv.id = i;
-    fieldDiv.classList.add('field');
-    fieldDiv.innerHTML = GameBoard.board[i-1];
-    fieldDiv.addEventListener('click', function _listener() {
-        GameController.makeMove(fieldDiv.id, GameBoard.board)
-        fieldDiv.removeEventListener('click', _listener)
-    });
-    gameGrid.appendChild(fieldDiv);
-}
+GameBoard.loadBoard();
 
 DisplayController.handleTurn("Player 1");

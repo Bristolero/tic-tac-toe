@@ -14,8 +14,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(240, 203, 184);
+    background-color: rgb(255, 221, 202);
     height: 90vh;
+    margin:0;
 }
 
 main {
@@ -39,10 +40,20 @@ main {
     padding: 20px;
 }
 
+.top-board-wrapper {
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
 .turn-indicator {
     padding: 20px;
     align-self: flex-start;
     font-size: 30px;
+    font-family: sans-serif;
 }
 
 .field {
@@ -52,9 +63,27 @@ main {
     align-items: center;
     justify-content: center;
     border: 1px solid rgb(255, 215, 39);
-    font-family: Comfortaa;
+    font-family: Comfortaa, sans-serif;
     font-size: 100px;
     font-weight: 600;
+}
+
+.reset-btn {
+    background-color: rgb(100, 221, 96);
+    border: 3px solid black;
+    border-radius: 15px;
+    font-family: Comfortaa, sans-serif;
+    font-size: 30px;
+    height: 100%;
+    width: 30%;
+}
+
+.reset-btn:hover {
+    background-color: rgb(95, 177, 92);
+}
+
+.reset-btn:active {
+    background-color: rgb(50, 104, 48);
 }
 
 .field:hover {

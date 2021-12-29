@@ -11,11 +11,14 @@
 <body>
     <header>Tic-Tac-Toe</header>
     <main>
-        <div class="turn-indicator" id="turn-indicator"></div>
+        <div class="top-board-wrapper">
+            <div class="turn-indicator" id="turn-indicator"></div>
+            <button class="reset-btn" id="reset-btn" onclick=GameController.reset()>RESET</button>
+        </div>
         <div class="board" id="gameGrid">
 
         </div>
-
+        
     </main>
 </body>
 </html>
