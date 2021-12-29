@@ -41,7 +41,7 @@ const GameBoard = (() => {
    
 
     const checkWin = () => {
-        if( (board[0] == "O" && GameBoard.board[3] == "O" && GameBoard.board[6] == "O") || 
+        if( (GameBoard.board[0] == "O" && GameBoard.board[3] == "O" && GameBoard.board[6] == "O") || 
         (GameBoard.board[1] == "O" && GameBoard.board[4] == "O" && GameBoard.board[7] == "O") || 
         (GameBoard.board[2] == "O" && GameBoard.board[5] == "O" && GameBoard.board[8] == "O") || 
         (GameBoard.board[0] == "O" && GameBoard.board[1] == "O" && GameBoard.board[2] == "O") || 
